@@ -9,7 +9,7 @@
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>ValheimBepInExTemplate</RootNamespace>
-        <AssemblyName>ValheimBepInExTemplate</AssemblyName>
+        <AssemblyName>ValheimReelableHarpoon</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -22,6 +22,7 @@
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,13 +32,17 @@
         <DefineConstants>TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="0Harmony">
           <HintPath>lib\0Harmony.dll</HintPath>
         </Reference>
+        <Reference Include="assembly_utils">
+          <HintPath>lib\assembly_utils_publicized.dll</HintPath>
+        </Reference>
         <Reference Include="assembly_valheim">
-          <HintPath>lib\assembly_valheim.dll</HintPath>
+          <HintPath>lib\assembly_valheim_publicized.dll</HintPath>
         </Reference>
         <Reference Include="BepInEx">
           <HintPath>lib\BepInEx.dll</HintPath>
@@ -79,9 +84,13 @@
         <Reference Include="UnityEngine.CoreModule">
           <HintPath>lib\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.PhysicsModule">
+          <HintPath>lib\UnityEngine.PhysicsModule.dll</HintPath>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="MyPlugin.cs" />
+        <Compile Include="HarpoonReeling.cs" />
+        <Compile Include="ValheimReelableHarpoonPlugin.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
