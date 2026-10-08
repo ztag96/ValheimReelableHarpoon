@@ -10,8 +10,24 @@ namespace ValheimReelableHarpoon
         [HarmonyPatch(typeof(SE_Harpooned), nameof(SE_Harpooned.UpdateStatusEffect)), HarmonyPostfix]
         private static void UpdateStatusEffectPostfix(SE_Harpooned __instance, float dt)
         {
-            if (__instance.m_attacker.IsCrouching())
+            
+            if (__instance.m_attacker == null)
             {
+                ValheimReelableHarpoonPlugin.logger.LogWarning("Harpooned attacker is null!");
+                return;
+            }
+            
+            if(__instance.m_attacker != Player.m_localPlayer)
+            {
+                ValheimReelableHarpoonPlugin.logger.LogWarning("Harpooned attacker is not the local player!");
+                return;
+            }
+
+            if (ZInput.GetButton("Use") || ZInput.GetButton("JoyUse"))
+            {
+                ValheimReelableHarpoonPlugin.logger.LogInfo("Harpoon reeling!");
+                
+                /*
                 if(__instance.m_character == null)
                 {
                     ValheimReelableHarpoonPlugin.logger.LogWarning("Harpooned character is null!");
@@ -30,6 +46,8 @@ namespace ValheimReelableHarpoon
                 var pullPower = Pull(characterRb, targetPos, __instance.m_pullSpeed, __instance.m_pullForce, true, true, __instance.m_forcePower);
 
                 ValheimReelableHarpoonPlugin.logger.LogInfo($"Pulling in direction: {pullPower.normalized} at force: {pullPower.magnitude}.");
+                */
+                
                 // __instance.m_drainStaminaTimer += dt;
                 // if (__instance.m_drainStaminaTimer > __instance.m_staminaDrainInterval && pullPower > 0f)
                 // {
