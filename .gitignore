@@ -258,3 +258,8 @@ typings/
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
 
+# User-generated csproj files.
+*.csproj.user
+
+# Executables
+*.exe
