@@ -21,6 +21,14 @@ namespace ValheimReelableHarpoon
             logger.LogInfo("Valheim Reelable Harpoons loaded successfully!");
             HarmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
         }
+
+        private void Update()
+        {
+            if (ZInput.GetButtonDown("Use") && ZInput.GetButtonDown("Run"))
+            {
+                LogInfo("Use and Run buttons pressed.");
+            }
+        }
         
         public static void LogInfo(string message)
         {
