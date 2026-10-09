@@ -12,7 +12,7 @@ There are a few configuration options available right now. They should all be se
 
 ## Dependencies
 
-All you need is [BepInEx](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/). This was made on v5.4+ if you care.
+All you need is [BepInEx](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/). This was made on v5.4+ if you care. Confirmed Compatibility is only with Valheim 1.0+.
 
 ## Conflicts
 
