@@ -8,7 +8,14 @@ When the correct combination of keys is pressed while harpooning, the hooked cre
 
 ## Configuration
 
-There are a few configuration options available right now. They should all be self-explanatory. The file is called "ztag96.ValheimReelableHarpoon.cfg." You can also make changes to the config mid-session, depending on the config's lock status. I plan to come back to this README and visualize the different options. I also aim to make the keybindings customizable. The config files should sync across a server, and admins have the ability to lock edits to the config. Keeping the PullSpeed not much higher than 1 facilitates a "lore-friendly" experience.
+There are a few configuration options available right now. They should all be self-explanatory. The file is called "ztag96.ValheimReelableHarpoon.cfg." You can also make changes to the config mid-session, depending on the config's lock status. I also aim to make the keybindings customizable. The config files should sync across a server, and admins have the ability to lock edits to the config. Keeping the PullSpeed not much higher than 1 facilitates a "lore-friendly" experience.
+
+|Option|Description|Default Value|
+|------|-----------|-------------|
+|IsLocked|Whether the config is locked and cannot be edited.|true|
+|PullSpeed|The speed at which the harpoon will reel in.|1|
+|MinDistance|The closest a creature can be reeled.|5|
+|CanPullUp|If the harpoon can pull creatures up or down.|true|
 
 ## Dependencies
 
@@ -16,8 +23,8 @@ All you need is [BepInEx](https://thunderstore.io/c/valheim/p/denikson/BepInExPa
 
 ## Conflicts
 
-This mod will almost definitely conflict with [HarpoonReelin](https://thunderstore.io/c/valheim/p/Wendigo/HarpoonReelIn/) and any other mods that add any sort of Reeling behavior, especially those that modify ```SE_Harpooned``` members. Let me know if you find any other conflicts. 
+This mod will almost definitely conflict with [HarpoonReelin](https://thunderstore.io/c/valheim/p/Wendigo/HarpoonReelIn/) and any other mods that add any sort of Reeling behavior, especially those that modify ```SE_Harpooned``` members. Let me know if you find any other conflicts.
 
 ## AI Disclosure
 
-No vibe coding was done here. Generative AI was used for research into the BepInEx, Harmony, Valheim, and other libraries after solo research failed.
+No vibe coding here. Generative AI was used for research into the BepInEx, Harmony, Valheim, and other libraries after solo research failed. Debugging was also assisted by AI.
