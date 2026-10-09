@@ -4,7 +4,7 @@
         <PackageDir>$(ProjectDir)Package\</PackageDir>
         <MergedAssemblyFile>$(PackageDir)$(AssemblyName).dll</MergedAssemblyFile>
         <PublishDir>$(SolutionDir)PublishOutput\</PublishDir>
-        <ReadmeFile>$(ProjectDir)README.md</ReadmeFile>
+        <ReadmeFile>$(SolutionDir)README.md</ReadmeFile>
         <ManifestFile>$(ProjectDir)manifest.json</ManifestFile>
         <IconFile>$(ProjectDir)icon.png</IconFile>
     </PropertyGroup>
