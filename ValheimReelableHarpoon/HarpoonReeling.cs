@@ -18,7 +18,6 @@ namespace ValheimReelableHarpoon
             
             if (_canReel)
             {
-                // ValheimReelableHarpoonPlugin.Logger.LogInfo("Harpoon reeling!");
                 __instance.m_baseDistance -= dt * ValheimReelableHarpoonPlugin.ConfigPullSpeed.Value;
             }
         }
@@ -28,7 +27,7 @@ namespace ValheimReelableHarpoon
         {
             if (_canReel)
             {
-                noUpForce = false;
+                noUpForce = ValheimReelableHarpoonPlugin.ConfigCanPullUp.Value;
             }
         }
     }  

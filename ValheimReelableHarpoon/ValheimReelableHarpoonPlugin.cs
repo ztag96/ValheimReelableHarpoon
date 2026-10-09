@@ -4,53 +4,49 @@ using BepInEx.Configuration;
 using System.IO;
 using HarmonyLib;
 using System.Reflection;
-// using ServerSync;
+using ServerSync;
 
 namespace ValheimReelableHarpoon
 {
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     public class ValheimReelableHarpoonPlugin : BaseUnityPlugin
     {
-        const string PluginGuid = "ztag96.ValheimReelableHarpoon";
-        const string PluginName = "Reelable Harpoon";
-        const string PluginVersion = "0.0.1";
-        const string ConfigFileName = PluginGuid + ".cfg";
-        const float DefaultPullSpeed = 1f;
+        private const string PluginGuid = "ztag96.ValheimReelableHarpoon";
+        private const string PluginName = "Reelable Harpoon";
+        private const string PluginVersion = "0.0.1";
+        private const string ConfigFileName = PluginGuid + ".cfg";
+        private const float DefaultPullSpeed = 1f;
         private const float DefaultMinDistance = 5f;
 
         internal static ConfigEntry<float> ConfigPullSpeed;
         internal static ConfigEntry<float> ConfigMinDistance;
-        // internal static ConfigEntry<float> ConfigStaminaDrainPerSecond;
-        // internal static ConfigEntry<bool> ConfigIsWeightFactored;
-        // internal static ConfigEntry<bool> ConfigCanPullUp;
+        internal static ConfigEntry<bool> ConfigCanPullUp;
+        private static ConfigEntry<bool> ConfigIsLocked;
         
         public static readonly ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource(PluginName);
         static readonly string ConfigFileFullPath =
             Paths.ConfigPath + Path.DirectorySeparatorChar + ConfigFileName;
+        
+        private readonly Harmony _harmonyInstance = new Harmony(PluginGuid);
 
-        readonly Harmony _harmonyInstance = new Harmony(PluginGuid);
+        private static ConfigSync _configSync;
 
-        /*
-        private ServerSync.ConfigSync _configSync = new ServerSync.ConfigSync(PluginGuid)
+        private  void Awake()
         {
-            DisplayName = PluginName, CurrentVersion = PluginVersion
-        };
-
-        */
-        public void Awake()
-        {
+            _configSync = new ConfigSync("ztag96.ValheimReelableHarpoon")
+            {
+                DisplayName = PluginName, CurrentVersion = PluginVersion, MinimumRequiredVersion = PluginVersion
+            };
+            
             Config.SaveOnConfigSet = false;
 
-            ConfigPullSpeed = Config.Bind<float>("General", "PullSpeed", DefaultPullSpeed, "The speed at which the harpoon will reel in.");
-            ConfigMinDistance = Config.Bind<float>("General", "MinDistance", DefaultMinDistance,
+            ConfigIsLocked = Config.Bind<bool>("Admin", "IsLocked", true, "Whether the config is locked and cannot be edited.");
+            _configSync.AddLockingConfigEntry(ConfigIsLocked);
+            ConfigPullSpeed = ConfigBind<float>("General", "PullSpeed", DefaultPullSpeed, "The speed at which the harpoon will reel in.");
+            ConfigMinDistance = ConfigBind<float>("General", "MinDistance", DefaultMinDistance,
                 "The closest distance a creature can be before reeling stops.");
-            // ConfigStaminaDrainPerSecond = Config.Bind<float>("General", "StaminaDrainPerSecond", 10f,
-            //     "Currently nonfunctional. The amount of stamina drained per second while reeling in a creature. The default value matches the harpoon's normal stamina drains.");
-            // ConfigIsWeightFactored = Config.Bind<bool>("General", "IsWeightFactored", false,
-            //     "Currently nonfunctional. Whether the stamina drain is factored by the creature's weight.");
-            // ConfigCanPullUp = Config.Bind<bool>("General", "CanPullUp", false,
-            //     "Currently nonfunctional. Whether the harpoon can pull the target up. The harpoon normally does not do this.");
-
+            ConfigCanPullUp = ConfigBind<bool>("General", "CanPullUp", true, "Whether the harpoon can pull creatures up (or down). The harpoon cannot do this normally.");
+            
             Logger.LogDebug($"Saving config file to: {ConfigFileFullPath}");
             Config.Save();
             Config.SaveOnConfigSet = true;
@@ -60,12 +56,12 @@ namespace ValheimReelableHarpoon
             Logger.LogInfo("Valheim Reelable Harpoons loaded successfully! Thank you!");
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             Config.Save();
         }
 
-        void SetupWatcher()
+        private void SetupWatcher()
         {
             var watcher = new FileSystemWatcher(Paths.ConfigPath, ConfigFileName);
             watcher.Changed += ReadConfigValues;
@@ -76,7 +72,7 @@ namespace ValheimReelableHarpoon
             watcher.EnableRaisingEvents = true;
         }
 
-        void ReadConfigValues(object sender, FileSystemEventArgs e)
+        private void ReadConfigValues(object sender, FileSystemEventArgs e)
         {
             if (!File.Exists(ConfigFileFullPath)) return;
             try
@@ -90,11 +86,9 @@ namespace ValheimReelableHarpoon
             }
         }
         
-        /*
         ConfigEntry<T> ConfigBind<T>(string group, string name, T value, ConfigDescription description, bool synchronizedSetting = true)
         {
             ConfigEntry<T> configEntry = Config.Bind(group, name, value, description);
-
             SyncedConfigEntry<T> syncedConfigEntry = _configSync.AddConfigEntry(configEntry);
             syncedConfigEntry.SynchronizedConfig = synchronizedSetting;
 
@@ -102,6 +96,5 @@ namespace ValheimReelableHarpoon
         }
         
         ConfigEntry<T> ConfigBind<T>(string group, string name, T value, string description, bool synchronizedSetting = true) => ConfigBind(group, name, value, new ConfigDescription(description), synchronizedSetting);
-    */
     }
 }
