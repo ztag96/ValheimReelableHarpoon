@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValheimReelableHarpoon", "ValheimReelableHarpoon\ValheimReelableHarpoon.csproj", "{B6AD9E47-7028-4960-BA95-C7F127C64223}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarpoonMeleeAttack", "..\ValheimSpearModsAndFriends\HarpoonMeleeAttack\HarpoonMeleeAttack\HarpoonMeleeAttack.csproj", "{AAE0A642-81B7-4C6C-841B-016A482CCB02}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,7 +12,5 @@ Global
 		{B6AD9E47-7028-4960-BA95-C7F127C64223}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6AD9E47-7028-4960-BA95-C7F127C64223}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6AD9E47-7028-4960-BA95-C7F127C64223}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AAE0A642-81B7-4C6C-841B-016A482CCB02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AAE0A642-81B7-4C6C-841B-016A482CCB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal

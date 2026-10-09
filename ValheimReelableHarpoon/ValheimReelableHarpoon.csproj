@@ -68,11 +68,14 @@
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="lib\" />
+      <Folder Include="$(LibDir)" />
     </ItemGroup>
     <ItemGroup>
+      <Content Include="Environment.props" />
+      <Content Include="Local.Environment.props" />
       <Content Include="ILRepack.targets" />
-      <Content Include="ValheimReelableHarpoon.csproj.user" />
+      <Content Include="manifest.json" />
+      <Content Include="README.md" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
@@ -86,14 +89,6 @@
     <Target Name="AfterBuild">
     </Target>
     -->
-
-    <PropertyGroup>
-        <PostBuildEvent>
-            xcopy "$(ProjectDir)README.md" "$(ProjectDir)Package\" /q /y /i
-            if $(ConfigurationName) == Debug del "$(TargetPath).mdb"
-            if $(ConfigurationName) == Debug "$(SolutionDir)pdb2mdb.exe" "$(TargetPath)"
-        </PostBuildEvent>
-    </PropertyGroup>
 
     <Import Project="..\packages\ILRepack.Lib.MSBuild.Task.2.0.48\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.48\build\ILRepack.Lib.MSBuild.Task.targets')" />
 

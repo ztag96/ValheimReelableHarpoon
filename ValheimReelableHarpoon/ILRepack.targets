@@ -1,18 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(ProjectDir)Environment.props"/>
+    <Import Project="$(ProjectDir)Local.Environment.props"/>
+    
     <Target Name="ILRepacker" AfterTargets="AfterBuild">
         <ItemGroup>
             <InputAssemblies Include="$(TargetPath)" />
             <InputAssemblies Include="$(ProjectDir)lib\ServerSync.dll" />
         </ItemGroup>
-        <ILRepack 
+        <ILRepack
                 Parallel="true" 
-                DebugInfo="true" 
+                DebugInfo="false" 
                 Internalize="true" 
-                InputAssemblies="@(InputAssemblies)" 
-                OutputFile="$(ProjectDir)Package\ValheimReelableHarpoon.dll"
-                TargetKind="SameAsPrimaryAssembly" 
-                LibraryPath="$(ProjectDir)lib\" 
-        />
+                InputAssemblies="@(InputAssemblies)"
+                OutputFile="$(MergedAssemblyFile)"
+                TargetKind="Dll" 
+                LibraryPath="$(ProjectDir)lib\"/>
+    </Target>
+    
+    <Target Name="Debug" 
+            AfterTargets="ILRepacker" 
+            Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        
+        <MakeDir Directories="$(BuildDir)"  Condition="!Exists('$(BuildDir)')"/>
+        <Copy SourceFiles="$(MergedAssemblyFile)" DestinationFolder="$(BuildDir)"/>
+        <Message Text="Copied $(MergedAssemblyFile) to $(BuildDir)."/>
+    </Target>
+    
+    <Target Name="Release" 
+            AfterTargets="ILRepacker" 
+            Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+
+        <MakeDir Directories="$(PackageDir)" Condition="!Exists('$(PackageDir)')"/>
+        <MakeDir Directories="$(PublishDir)" Condition="!Exists('$(PublishDir)')"/>
+        <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(PackageDir)"/>
+        <Message Text="Copied @(SourceFiles) to $(PackageDir)."/>
+        <ZipDirectory SourceDirectory="$(PackageDir)" DestinationFile="$(PublishDir)$(AssemblyName).zip" Overwrite="true"/>
+        <RemoveDir Directories="$(BuildDir)" Condition="Exists('$(BuildDir)')"/>
     </Target>
 </Project>
