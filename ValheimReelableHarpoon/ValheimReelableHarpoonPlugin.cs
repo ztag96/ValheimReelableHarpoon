@@ -12,11 +12,13 @@ namespace ValheimReelableHarpoon
     public class ValheimReelableHarpoonPlugin : BaseUnityPlugin
     {
         private const string PluginGuid = "ztag96.ValheimReelableHarpoon";
-        private const string PluginName = "Reelable Harpoon";
-        private const string PluginVersion = "0.0.1";
+        private const string PluginName = "Valheim Reelable Harpoon";
+        private const string PluginVersion = "1.0.0";
         private const string ConfigFileName = PluginGuid + ".cfg";
         private const float DefaultPullSpeed = 1f;
         private const float DefaultMinDistance = 5f;
+        private const bool DefaultCanPullUp = true;
+        private const bool DefaultIsLocked = true;
 
         internal static ConfigEntry<float> ConfigPullSpeed;
         internal static ConfigEntry<float> ConfigMinDistance;
@@ -40,12 +42,12 @@ namespace ValheimReelableHarpoon
             
             Config.SaveOnConfigSet = false;
 
-            ConfigIsLocked = Config.Bind<bool>("Admin", "IsLocked", true, "Whether the config is locked and cannot be edited.");
+            ConfigIsLocked = Config.Bind<bool>("Admin", "IsLocked", DefaultIsLocked, "Whether the config is locked and cannot be edited.");
             _configSync.AddLockingConfigEntry(ConfigIsLocked);
             ConfigPullSpeed = ConfigBind<float>("General", "PullSpeed", DefaultPullSpeed, "The speed at which the harpoon will reel in.");
             ConfigMinDistance = ConfigBind<float>("General", "MinDistance", DefaultMinDistance,
                 "The closest distance a creature can be before reeling stops.");
-            ConfigCanPullUp = ConfigBind<bool>("General", "CanPullUp", true, "Whether the harpoon can pull creatures up (or down). The harpoon cannot do this normally.");
+            ConfigCanPullUp = ConfigBind<bool>("General", "CanPullUp", DefaultCanPullUp, "Whether the harpoon can pull creatures up (or down). The harpoon cannot do this normally.");
             
             Logger.LogDebug($"Saving config file to: {ConfigFileFullPath}");
             Config.Save();
