@@ -1,9 +1,8 @@
 ﻿using HarmonyLib;
-using UnityEngine;
-using System;
 
 namespace ValheimReelableHarpoon
 {
+    
     [HarmonyPatch]
     internal class HarpoonReeling
     {
@@ -12,12 +11,13 @@ namespace ValheimReelableHarpoon
         {
             bool isUsing = ZInput.GetButton("Use") || ZInput.GetButton("JoyUse");
             bool isRunning = ZInput.GetButton("Run") || ZInput.GetButton("JoyRun");
-            bool canReel = isUsing && isRunning;
+            bool isFar = __instance.m_baseDistance > ValheimReelableHarpoonPlugin.ConfigMinDistance.Value;
+            bool canReel = isUsing && isRunning && isFar;
             
             if (canReel)
             {
-                ValheimReelableHarpoonPlugin.logger.LogInfo("Harpoon reeling!");
-                __instance.m_baseDistance -= dt;
+                ValheimReelableHarpoonPlugin.Logger.LogInfo("Harpoon reeling!");
+                __instance.m_baseDistance -= dt * ValheimReelableHarpoonPlugin.ConfigPullSpeed.Value;
             }
         }
     }  
