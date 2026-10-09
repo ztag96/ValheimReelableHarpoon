@@ -263,3 +263,7 @@ _Pvt_Extensions
 
 # Executables
 *.exe
+
+lib/
+
+Package/
