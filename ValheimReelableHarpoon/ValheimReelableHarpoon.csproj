@@ -8,8 +8,8 @@
         <ProjectGuid>{B6AD9E47-7028-4960-BA95-C7F127C64223}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>ValheimReelableHarpoon</RootNamespace>
-        <AssemblyName>ValheimReelableHarpoon</AssemblyName>
+        <RootNamespace>ztag96-ValheimReelableHarpoon</RootNamespace>
+        <AssemblyName>ztag96-ValheimReelableHarpoon</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -89,6 +89,13 @@
     <Target Name="AfterBuild">
     </Target>
     -->
+
+    <PropertyGroup>
+        <PostBuildEvent>
+            if $(ConfigurationName) == Debug del "$(TargetPath).mdb"
+            if $(ConfigurationName) == Debug "$(SolutionDir)pdb2mdb.exe" "$(TargetPath)"
+        </PostBuildEvent>
+    </PropertyGroup>
 
     <Import Project="..\packages\ILRepack.Lib.MSBuild.Task.2.0.48\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.48\build\ILRepack.Lib.MSBuild.Task.targets')" />
 
