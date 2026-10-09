@@ -15,8 +15,8 @@ namespace ValheimReelableHarpoon
         const string PluginName = "Reelable Harpoon";
         const string PluginVersion = "0.0.1";
         const string ConfigFileName = PluginGuid + ".cfg";
-        const float DefaultMinDistance = 5f;
-        const float DefaultPullSpeed = 5f;
+        const float DefaultPullSpeed = 1f;
+        private const float DefaultMinDistance = 5f;
 
         internal static ConfigEntry<float> ConfigPullSpeed;
         internal static ConfigEntry<float> ConfigMinDistance;
