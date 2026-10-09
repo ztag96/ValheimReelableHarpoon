@@ -258,12 +258,14 @@ typings/
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
 
-# User-generated csproj files.
+# User-generated Environment files.
 *.csproj.user
+Local.Environment.props
 
 # Executables
 *.exe
 
+# Libraries and Build Directories
 lib/
-
 Package/
+PublishOutput
