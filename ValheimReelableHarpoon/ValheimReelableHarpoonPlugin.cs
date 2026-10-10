@@ -16,23 +16,25 @@ namespace ValheimReelableHarpoon
         private const string PluginName = "Valheim Reelable Harpoon";
         private const string PluginVersion = "1.0.0";
         private const string ConfigFileName = PluginGuid + ".cfg";
-        private const float DefaultPullSpeed = 1f;
-        private const float DefaultMinDistance = 5f;
+        private const int DefaultPullSpeed = 10;
+        private const int DefaultMinDistance = 5;
         private const bool DefaultCanPullUp = true;
+        internal const string DefaultOneButton = "Default";
         private const bool DefaultIsLocked = true;
-
-        internal static ConfigEntry<float> ConfigPullSpeed;
-        internal static ConfigEntry<float> ConfigMinDistance;
-        internal static ConfigEntry<bool> ConfigCanPullUp;
-        private static ConfigEntry<bool> ConfigIsLocked;
         
-        public static readonly ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource(PluginName);
-        static readonly string ConfigFileFullPath =
+        internal static ConfigEntry<int> ConfigPullSpeed;
+        internal static ConfigEntry<int> ConfigMinDistance;
+        internal static ConfigEntry<bool> ConfigCanPullUp;
+        internal static ConfigEntry<string> ConfigOneButton;
+        private static ConfigEntry<bool> ConfigIsLocked;
+        private static ConfigSync _configSync;
+        
+        private static readonly string ConfigFileFullPath =
             Paths.ConfigPath + Path.DirectorySeparatorChar + ConfigFileName;
+        internal static readonly ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource(PluginName);
         
         private readonly Harmony _harmonyInstance = new Harmony(PluginGuid);
-
-        private static ConfigSync _configSync;
+        
 
         private  void Awake()
         {
@@ -45,10 +47,11 @@ namespace ValheimReelableHarpoon
 
             ConfigIsLocked = Config.Bind<bool>("Admin", "IsLocked", DefaultIsLocked, "Whether the config is locked and cannot be edited.");
             _configSync.AddLockingConfigEntry(ConfigIsLocked);
-            ConfigPullSpeed = ConfigBind<float>("General", "PullSpeed", DefaultPullSpeed, "The speed at which the harpoon will reel in.");
-            ConfigMinDistance = ConfigBind<float>("General", "MinDistance", DefaultMinDistance,
+            ConfigPullSpeed = ConfigBind<int>("General", "PullSpeed", DefaultPullSpeed, "The speed at which the harpoon will reel in.");
+            ConfigMinDistance = ConfigBind<int>("General", "MinDistance", DefaultMinDistance,
                 "The closest distance a creature can be before reeling stops.");
             ConfigCanPullUp = ConfigBind<bool>("General", "CanPullUp", DefaultCanPullUp, "Whether the harpoon can pull creatures up (or down). The harpoon cannot do this normally.");
+            ConfigOneButton = ConfigBind<string>("General", "OneButton", DefaultOneButton, "The harpoon will only be able to be reeled in with this button. Your options are: \"Use, JoyUse, Run, or JoyRun\".");
             
             Logger.LogDebug($"Saving config file to: {ConfigFileFullPath}");
             Config.Save();

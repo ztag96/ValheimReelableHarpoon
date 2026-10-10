@@ -18,12 +18,12 @@ The harpoon's distance from the player is saved when it attaches to a creature. 
 
 ## Configuration
 
-The config file can be found at ```<valheim_install_path>/BepInEx/config/ztag96.ValheimReelableHarpoon.cfg``` You can also make changes to the config mid-session. The config files should sync across a server, and admins have the ability to lock edits to the config. Keeping the PullSpeed not much higher than 1 facilitates a "lore-friendly" experience.
+The config file can be found at ```<valheim_install_path>/BepInEx/config/ztag96.ValheimReelableHarpoon.cfg``` You ca**n also make changes to the config mid-session. The config files should sync across a server, and admins have the ability to lock edits to the config.
 
 |Option|Description|Default Value|
 |------|-----------|-------------|
 |IsLocked|Whether the config is locked and cannot be edited.|true|
-|PullSpeed|The speed at which the harpoon will reel in.|1|
+|PullSpeed|The speed at which the harpoon will reel in.|10|
 |MinDistance|The closest a creature can be reeled.|5|
 |CanPullUp|If the harpoon can pull creatures up or down.|true|
 
