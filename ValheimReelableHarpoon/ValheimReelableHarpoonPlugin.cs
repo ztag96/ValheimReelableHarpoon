@@ -14,18 +14,18 @@ namespace ValheimReelableHarpoon
     {
         private const string PluginGuid = "ztag96.ValheimReelableHarpoon";
         private const string PluginName = "Valheim Reelable Harpoon";
-        private const string PluginVersion = "1.0.0";
+        private const string PluginVersion = "1.1.0";
         private const string ConfigFileName = PluginGuid + ".cfg";
         private const int DefaultPullSpeed = 10;
         private const int DefaultMinDistance = 5;
-        private const bool DefaultCanPullUp = true;
-        internal const string DefaultOneButton = "Default";
+        private const bool DefaultCanPullUp = false;
+        internal const string DefaultPreferredButton = "Default";
         private const bool DefaultIsLocked = true;
         
         internal static ConfigEntry<int> ConfigPullSpeed;
         internal static ConfigEntry<int> ConfigMinDistance;
         internal static ConfigEntry<bool> ConfigCanPullUp;
-        internal static ConfigEntry<string> ConfigOneButton;
+        internal static ConfigEntry<string> ConfigPreferredButton;
         private static ConfigEntry<bool> ConfigIsLocked;
         private static ConfigSync _configSync;
         
@@ -50,8 +50,8 @@ namespace ValheimReelableHarpoon
             ConfigPullSpeed = ConfigBind<int>("General", "PullSpeed", DefaultPullSpeed, "The speed at which the harpoon will reel in.");
             ConfigMinDistance = ConfigBind<int>("General", "MinDistance", DefaultMinDistance,
                 "The closest distance a creature can be before reeling stops.");
-            ConfigCanPullUp = ConfigBind<bool>("General", "CanPullUp", DefaultCanPullUp, "Whether the harpoon can pull creatures up (or down). The harpoon cannot do this normally.");
-            ConfigOneButton = ConfigBind<string>("General", "OneButton", DefaultOneButton, "The harpoon will only be able to be reeled in with this button. Your options are: \"Use, JoyUse, Run, or JoyRun\".");
+            ConfigCanPullUp = ConfigBind<bool>("General", "CanPullUp", DefaultCanPullUp, "Whether the harpoon can pull creatures up. The harpoon cannot do this normally.");
+            ConfigPreferredButton = ConfigBind<string>("General", "PreferredButton", DefaultPreferredButton, "The harpoon will only be able to be reeled in with this button. Good options are: \"Use or Run\", or \"JoyUse\" if you're using a gamepad.\nGo to https://github.com/Valheim-Modding/Wiki/wiki/Key-Binding-Strings for accepted bindings.");
             
             Logger.LogDebug($"Saving config file to: {ConfigFileFullPath}");
             Config.Save();
@@ -63,10 +63,10 @@ namespace ValheimReelableHarpoon
             Logger.LogDebug($"Config value CanPullUp: {ConfigCanPullUp.Value}");
             Logger.LogDebug($"Config value ConfigIsLocked: {ConfigIsLocked.Value}");
 
-            if (ConfigOneButton.Value != DefaultOneButton)
+            if (ConfigPreferredButton.Value != DefaultPreferredButton)
             {
-                Logger.LogDebug($"Config value OneButton set to: {ConfigOneButton.Value}");
-                HarpoonReeling.GetInput = () => ZInput.GetButton(ConfigOneButton.Value);
+                Logger.LogDebug($"Config value OneButton set to: {ConfigPreferredButton.Value}");
+                HarpoonReeling.GetInput = () => ZInput.GetButton(ConfigPreferredButton.Value);
             }
 
             _harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());

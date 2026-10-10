@@ -7,10 +7,11 @@
         <ReadmeFile>$(SolutionDir)README.md</ReadmeFile>
         <ManifestFile>$(ProjectDir)manifest.json</ManifestFile>
         <IconFile>$(ProjectDir)icon.png</IconFile>
+        <ChangelogFile>$(ProjectDir)CHANGELOG.md</ChangelogFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <SourceFiles Include="$(ReadmeFile);$(ManifestFile);$(IconFile)"/>
+        <SourceFiles Include="$(ReadmeFile);$(ManifestFile);$(IconFile);$(ChangelogFile)"/>
         <DebugFiles Include="$(TargetDir)\*.*"/>
     </ItemGroup>
 </Project>

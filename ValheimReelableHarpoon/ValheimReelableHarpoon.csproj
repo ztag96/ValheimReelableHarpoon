@@ -71,6 +71,7 @@
       <Folder Include="$(LibDir)" />
     </ItemGroup>
     <ItemGroup>
+      <Content Include="CHANGELOG.md" />
       <Content Include="Environment.props" />
       <Content Include="Local.Environment.props" />
       <Content Include="ILRepack.targets" />
