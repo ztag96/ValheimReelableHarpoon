@@ -8,10 +8,11 @@
         <ManifestFile>$(ProjectDir)manifest.json</ManifestFile>
         <IconFile>$(ProjectDir)icon.png</IconFile>
         <ChangelogFile>$(ProjectDir)CHANGELOG.md</ChangelogFile>
+        <LicenseFile>$(SolutionDir)LICENSE</LicenseFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <SourceFiles Include="$(ReadmeFile);$(ManifestFile);$(IconFile);$(ChangelogFile)"/>
+        <SourceFiles Include="$(ReadmeFile);$(ManifestFile);$(IconFile);$(ChangelogFile);$(LicenseFile)"/>
         <DebugFiles Include="$(TargetDir)\*.*"/>
     </ItemGroup>
 </Project>
