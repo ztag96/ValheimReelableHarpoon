@@ -9,27 +9,21 @@ namespace ValheimReelableHarpoon
     {
         private static bool _canReel;
         private static readonly int Ratio = 10;
-        
+
+        internal static Func<bool> GetInput = () =>
+        {
+            bool isUsing = ZInput.GetButton("Use") || ZInput.GetButton("JoyUse");
+            bool isRunning = ZInput.GetButton("Run") || ZInput.GetButton("JoyRun");
+            return isUsing && isRunning;
+        };
+            
         [HarmonyPatch(typeof(SE_Harpooned), nameof(SE_Harpooned.UpdateStatusEffect)), HarmonyPrefix]
         private static void UpdateStatusEffectPostfix(SE_Harpooned __instance, float dt)
         {
-            if (ValheimReelableHarpoonPlugin.ConfigOneButton.Value == ValheimReelableHarpoonPlugin.DefaultOneButton)
-            {
-                bool isUsing = ZInput.GetButton("Use") || ZInput.GetButton("JoyUse");
-                bool isRunning = ZInput.GetButton("Run") || ZInput.GetButton("JoyRun");
-                bool isFar = __instance.m_baseDistance > ValheimReelableHarpoonPlugin.ConfigMinDistance.Value;
-                _canReel = isUsing && isRunning && isFar;
-            }
-            
-            else
-            {
-                string keybind = ValheimReelableHarpoonPlugin.ConfigOneButton.Value;
-                bool isUsing = ZInput.GetButton(keybind);
-                bool isFar = __instance.m_baseDistance > ValheimReelableHarpoonPlugin.ConfigMinDistance.Value;
-                _canReel = isUsing && isFar;
-            }
+            _canReel = GetInput();
+            bool isFar = __instance.m_baseDistance > ValheimReelableHarpoonPlugin.ConfigMinDistance.Value;
 
-            if (_canReel)
+            if (_canReel && isFar)
             {
                 __instance.m_baseDistance -= dt * ValheimReelableHarpoonPlugin.ConfigPullSpeed.Value / Ratio;
             }

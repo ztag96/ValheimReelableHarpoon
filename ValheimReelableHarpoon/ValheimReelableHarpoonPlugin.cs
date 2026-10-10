@@ -63,6 +63,12 @@ namespace ValheimReelableHarpoon
             Logger.LogDebug($"Config value CanPullUp: {ConfigCanPullUp.Value}");
             Logger.LogDebug($"Config value ConfigIsLocked: {ConfigIsLocked.Value}");
 
+            if (ConfigOneButton.Value != DefaultOneButton)
+            {
+                Logger.LogDebug($"Config value OneButton set to: {ConfigOneButton.Value}");
+                HarpoonReeling.GetInput = () => ZInput.GetButton(ConfigOneButton.Value);
+            }
+
             _harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
             Logger.LogInfo("Valheim Reelable Harpoons loaded successfully! Thank you!");
         }
