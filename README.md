@@ -2,6 +2,8 @@
 
 A simple Valheim mod that lets you pull targets with the harpoon by pressing a combination of keys (current Run+Use). This is my first Valheim mod, so I decided to try something that seemed simple. I based my design philosophy around the description of Wendigo's mod [HarpoonReelin](https://thunderstore.io/c/valheim/p/Wendigo/HarpoonReelIn/). So, all this does is patch a couple methods: ```SE_Harpooned.UpdateStatusEffect```and ```Utils.Pull```. 
 
+![video1](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnFmdHN1djJ5Y3lranA4cnQ3ZmthdGJremZwdWU2cHc1c3AyOWFkeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/duIsOcucZt6omQ30Om/giphy.gif)
+
 ## What does it do?
 
 When the correct combination of keys is pressed while harpooning, the hooked creature will be pulled towards you. This is accomplished by decreasing the distance between the target and the harpoon's current endpoint. Whenever the harpoon hits a target, it sets how far it is away from the player. So, by deliberately decreasing that distance, we can simulate a pulling behavior without having to move around. I've also allowed players to choose whether they can pull targets "up." Vanilla harpoons only pull targets along the x & z axes so only forward, backward, left, and right. By modifying the ```noUpForce``` parameter to the ```Utils.Pull``` method, harpoons can affect a target's y position.
@@ -23,7 +25,11 @@ All you need is [BepInEx](https://thunderstore.io/c/valheim/p/denikson/BepInExPa
 
 ## Conflicts
 
-This mod will almost definitely conflict with [HarpoonReelin](https://thunderstore.io/c/valheim/p/Wendigo/HarpoonReelIn/) and any other mods that add any sort of Reeling behavior, especially those that modify ```SE_Harpooned``` members. Let me know if you find any other conflicts.
+This mod will almost definitely conflict with [HarpoonReelin](https://thunderstore.io/c/valheim/p/Wendigo/HarpoonReelIn/) and any other mods that add any sort of Reeling behaior, especially those that modify ```SE_Harpooned``` members. Let me know if you find any other conflicts.
+
+## Bugs?
+
+Post an Issue on the [GitHub Repository](https://github.com/ztag96/ValheimReelableHarpoon).
 
 ## AI Disclosure
 
