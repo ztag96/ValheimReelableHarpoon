@@ -8,9 +8,10 @@ A simple Valheim mod that lets you pull targets with the harpoon by pressing a c
 ## How to Use
 
 1) Harpoon a creature normally.
-2) Hold Shift+E, or Run+Use, to the pull creature towards you.
+2) Hold Shift+E, or Use on gamepad, to the pull creature towards you.
 * Your stamina will drain while pulling a creature. The drain rate is the same as vanilla.
 * You can only pull a creature until it's closer than MinDistance.
+* You can change what button you use.
 
 ## What does it do?
 
