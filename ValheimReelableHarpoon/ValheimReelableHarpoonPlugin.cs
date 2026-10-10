@@ -14,25 +14,27 @@ namespace ValheimReelableHarpoon
     {
         private const string PluginGuid = "ztag96.ValheimReelableHarpoon";
         private const string PluginName = "Valheim Reelable Harpoon";
-        private const string PluginVersion = "1.0.0";
+        private const string PluginVersion = "1.1.0";
         private const string ConfigFileName = PluginGuid + ".cfg";
-        private const float DefaultPullSpeed = 1f;
-        private const float DefaultMinDistance = 5f;
-        private const bool DefaultCanPullUp = true;
+        private const int DefaultPullSpeed = 10;
+        private const int DefaultMinDistance = 5;
+        private const bool DefaultCanPullUp = false;
+        internal const string DefaultPreferredButton = "Default";
         private const bool DefaultIsLocked = true;
-
-        internal static ConfigEntry<float> ConfigPullSpeed;
-        internal static ConfigEntry<float> ConfigMinDistance;
-        internal static ConfigEntry<bool> ConfigCanPullUp;
-        private static ConfigEntry<bool> ConfigIsLocked;
         
-        public static readonly ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource(PluginName);
-        static readonly string ConfigFileFullPath =
+        internal static ConfigEntry<int> ConfigPullSpeed;
+        internal static ConfigEntry<int> ConfigMinDistance;
+        internal static ConfigEntry<bool> ConfigCanPullUp;
+        internal static ConfigEntry<string> ConfigPreferredButton;
+        private static ConfigEntry<bool> ConfigIsLocked;
+        private static ConfigSync _configSync;
+        
+        private static readonly string ConfigFileFullPath =
             Paths.ConfigPath + Path.DirectorySeparatorChar + ConfigFileName;
+        internal static readonly ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource(PluginName);
         
         private readonly Harmony _harmonyInstance = new Harmony(PluginGuid);
-
-        private static ConfigSync _configSync;
+        
 
         private  void Awake()
         {
@@ -45,10 +47,11 @@ namespace ValheimReelableHarpoon
 
             ConfigIsLocked = Config.Bind<bool>("Admin", "IsLocked", DefaultIsLocked, "Whether the config is locked and cannot be edited.");
             _configSync.AddLockingConfigEntry(ConfigIsLocked);
-            ConfigPullSpeed = ConfigBind<float>("General", "PullSpeed", DefaultPullSpeed, "The speed at which the harpoon will reel in.");
-            ConfigMinDistance = ConfigBind<float>("General", "MinDistance", DefaultMinDistance,
+            ConfigPullSpeed = ConfigBind<int>("General", "PullSpeed", DefaultPullSpeed, "The speed at which the harpoon will reel in.");
+            ConfigMinDistance = ConfigBind<int>("General", "MinDistance", DefaultMinDistance,
                 "The closest distance a creature can be before reeling stops.");
-            ConfigCanPullUp = ConfigBind<bool>("General", "CanPullUp", DefaultCanPullUp, "Whether the harpoon can pull creatures up (or down). The harpoon cannot do this normally.");
+            ConfigCanPullUp = ConfigBind<bool>("General", "CanPullUp", DefaultCanPullUp, "Whether the harpoon can pull creatures up. The harpoon cannot do this normally.");
+            ConfigPreferredButton = ConfigBind<string>("General", "PreferredButton", DefaultPreferredButton, "The harpoon will only be able to be reeled in with this button. Good options are: \"Use or Run\", or \"JoyUse\" if you're using a gamepad.\nGo to https://github.com/Valheim-Modding/Wiki/wiki/Key-Binding-Strings for accepted bindings.");
             
             Logger.LogDebug($"Saving config file to: {ConfigFileFullPath}");
             Config.Save();
@@ -59,6 +62,12 @@ namespace ValheimReelableHarpoon
             Logger.LogDebug($"Config value MinDistance: {ConfigMinDistance.Value}");
             Logger.LogDebug($"Config value CanPullUp: {ConfigCanPullUp.Value}");
             Logger.LogDebug($"Config value ConfigIsLocked: {ConfigIsLocked.Value}");
+
+            if (ConfigPreferredButton.Value != DefaultPreferredButton)
+            {
+                Logger.LogDebug($"Config value OneButton set to: {ConfigPreferredButton.Value}");
+                HarpoonReeling.GetInput = () => ZInput.GetButton(ConfigPreferredButton.Value);
+            }
 
             _harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
             Logger.LogInfo("Valheim Reelable Harpoons loaded successfully! Thank you!");

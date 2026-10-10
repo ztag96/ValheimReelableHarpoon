@@ -10,22 +10,23 @@ A simple Valheim mod that lets you pull targets with the harpoon by pressing a c
 1) Harpoon a creature normally.
 2) Hold Shift+E, or Run+Use, to the pull creature towards you.
 * Your stamina will drain while pulling a creature. The drain rate is the same as vanilla.
-* You can only pull a creature up to the MinDistance which is set in the configuration.
+* You can only pull a creature until it's closer than MinDistance.
 
 ## What does it do?
 
-The harpoon's distance from the player is saved when it attaches to a creature. By deliberately decreasing that distance, we can simulate pulling. I've also allowed players to choose whether they can pull targets "up." Vanilla harpoons only pull targets along the x & z axes, so only forward, backward, left, and right. By modifying the ```noUpForce``` parameter to the ```Utils.Pull``` method, harpoons can affect a target's y position.
+The harpoon's distance from the player is saved when it attaches to a creature. By deliberately decreasing that distance, we can simulate pulling. I've also allowed players to choose whether they can pull targets "up." Vanilla harpoons cannot pull creatures upwards. By modifying the ```noUpForce``` parameter to the ```Utils.Pull``` method, harpoons can now do this.
 
 ## Configuration
 
-The config file can be found at ```<valheim_install_path>/BepInEx/config/ztag96.ValheimReelableHarpoon.cfg``` You can also make changes to the config mid-session. The config files should sync across a server, and admins have the ability to lock edits to the config. Keeping the PullSpeed not much higher than 1 facilitates a "lore-friendly" experience.
+The config file can be found at ```<valheim_install_path>/BepInEx/config/ztag96.ValheimReelableHarpoon.cfg``` You can also make changes to the config mid-session except for the keybindings. The config files should sync across a server, and admins have the ability to lock edits to the config.
 
 |Option|Description|Default Value|
 |------|-----------|-------------|
 |IsLocked|Whether the config is locked and cannot be edited.|true|
-|PullSpeed|The speed at which the harpoon will reel in.|1|
+|PullSpeed|The speed at which the harpoon will reel in.|10|
 |MinDistance|The closest a creature can be reeled.|5|
-|CanPullUp|If the harpoon can pull creatures up or down.|true|
+|CanPullUp|If the harpoon can pull creatures up.|false|
+|PreferredButton|What button to prefer using for pulling.|Default|
 
 ## Dependencies
 
