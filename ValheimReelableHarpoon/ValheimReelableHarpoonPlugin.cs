@@ -53,6 +53,11 @@ namespace ValheimReelableHarpoon
             Config.Save();
             Config.SaveOnConfigSet = true;
             SetupWatcher();
+            
+            Logger.LogDebug($"Config value PullSpeed: {ConfigPullSpeed.Value}");
+            Logger.LogDebug($"Config value MinDistance: {ConfigMinDistance.Value}");
+            Logger.LogDebug($"Config value CanPullUp: {ConfigCanPullUp.Value}");
+            Logger.LogDebug($"Config value ConfigIsLocked: {ConfigIsLocked.Value}");
 
             _harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
             Logger.LogInfo("Valheim Reelable Harpoons loaded successfully! Thank you!");

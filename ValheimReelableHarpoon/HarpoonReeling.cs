@@ -27,7 +27,7 @@ namespace ValheimReelableHarpoon
         {
             if (_canReel)
             {
-                noUpForce = ValheimReelableHarpoonPlugin.ConfigCanPullUp.Value;
+                noUpForce = !ValheimReelableHarpoonPlugin.ConfigCanPullUp.Value;
             }
         }
     }  
