@@ -1,4 +1,5 @@
 # Valheim Reelable Harpoon
+[Thunderstore Page](https://thunderstore.io/c/valheim/p/ztag96/ValheimReelableHarpoon/)
 
 A simple Valheim mod that lets you pull targets with the harpoon by pressing a combination of keys (currently Run+Use or Shift+E). This is my first Valheim mod, so I decided to try something that seemed simple. I based my design philosophy around the description of Wendigo's mod [HarpoonReelin](https://thunderstore.io/c/valheim/p/Wendigo/HarpoonReelIn/). So, all this does is patch a couple methods: ```SE_Harpooned.UpdateStatusEffect```and ```Utils.Pull```.
 
