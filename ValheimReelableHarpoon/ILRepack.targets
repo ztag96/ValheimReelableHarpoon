@@ -10,11 +10,11 @@
         </ItemGroup>
         <ILRepack
                 Parallel="true" 
-                DebugInfo="false" 
+                DebugInfo="true" 
                 Internalize="true" 
                 InputAssemblies="@(InputAssemblies)"
-                OutputFile="$(MergedAssemblyFile)"
-                TargetKind="Dll" 
+                OutputFile="$(TargetPath)"
+                TargetKind="SameAsPrimaryAssembly" 
                 LibraryPath="$(ProjectDir)lib\"/>
     </Target>
     
@@ -22,9 +22,13 @@
             AfterTargets="ILRepacker" 
             Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         
-        <MakeDir Directories="$(BuildDir)"  Condition="!Exists('$(BuildDir)')"/>
-        <Copy SourceFiles="$(MergedAssemblyFile)" DestinationFolder="$(BuildDir)"/>
-        <Message Text="Copied $(MergedAssemblyFile) to $(BuildDir)."/>
+        <RemoveDir Directories="$(BuildDir)" Condition="Exists('$(BuildDir)')"/>
+        <MakeDir Directories="$(BuildDir)"/>
+        <Delete Files="$(TargetPath).mdb" Condition="Exists('$(TargetPath).mdb')"/>
+        <Exec Command="$(SolutionDir)pdb2mdb.exe $(TargetPath)" />
+        <Copy SourceFiles="@(DebugFiles)" DestinationFolder="$(BuildDir)"/>
+        <Copy SourceFiles="$(TargetPath).mdb" DestinationFolder="$(BuildDir)"/>
+        <Message Text="Copied $(TargetDir) to $(BuildDir)." Importance="high"/>
     </Target>
     
     <Target Name="Release" 
@@ -35,6 +39,8 @@
         <MakeDir Directories="$(PublishDir)" Condition="!Exists('$(PublishDir)')"/>
         <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(PackageDir)"/>
         <Message Text="Copied @(SourceFiles) to $(PackageDir)."/>
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PackageDir)"/>
+        <Message Text="Copied $(TargetPath) to $(PackageDir)."/>
         <ZipDirectory SourceDirectory="$(PackageDir)" DestinationFile="$(PublishDir)$(AssemblyName).zip" Overwrite="true"/>
         <RemoveDir Directories="$(BuildDir)" Condition="Exists('$(BuildDir)')"/>
     </Target>

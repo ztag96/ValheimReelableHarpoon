@@ -89,14 +89,7 @@
     <Target Name="AfterBuild">
     </Target>
     -->
-
-    <PropertyGroup>
-        <PostBuildEvent>
-            if $(ConfigurationName) == Debug del "$(TargetPath).mdb"
-            if $(ConfigurationName) == Debug "$(SolutionDir)pdb2mdb.exe" "$(TargetPath)"
-        </PostBuildEvent>
-    </PropertyGroup>
-
+    
     <Import Project="..\packages\ILRepack.Lib.MSBuild.Task.2.0.48\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.48\build\ILRepack.Lib.MSBuild.Task.targets')" />
 
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

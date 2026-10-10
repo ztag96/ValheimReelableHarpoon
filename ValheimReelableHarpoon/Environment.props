@@ -11,5 +11,6 @@
 
     <ItemGroup>
         <SourceFiles Include="$(ReadmeFile);$(ManifestFile);$(IconFile)"/>
+        <DebugFiles Include="$(TargetDir)\*.*"/>
     </ItemGroup>
 </Project>
