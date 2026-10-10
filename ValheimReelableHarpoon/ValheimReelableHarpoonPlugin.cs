@@ -9,6 +9,7 @@ using ServerSync;
 namespace ValheimReelableHarpoon
 {
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
+    [BepInIncompatibility("com.kaden.harpoonreelin")]
     public class ValheimReelableHarpoonPlugin : BaseUnityPlugin
     {
         private const string PluginGuid = "ztag96.ValheimReelableHarpoon";
